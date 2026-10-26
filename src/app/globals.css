@@ -2,29 +2,36 @@
   --font-main: var(--font-prompt), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-code: var(--font-inter), monospace;
 
-  /* Colors */
-  --bg-primary: #0a0e17;
-  --bg-surface: #111827;
-  --bg-card: rgba(22, 30, 49, 0.75);
-  --bg-card-hover: rgba(30, 41, 67, 0.85);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-focus: #6366f1;
+  /* Futuristic White & Blue Palette */
+  --bg-primary: #030712;
+  --bg-surface: #081129;
+  --bg-card: rgba(8, 20, 48, 0.72);
+  --bg-card-hover: rgba(14, 33, 75, 0.82);
+  --border-subtle: rgba(56, 189, 248, 0.18);
+  --border-glow: rgba(56, 189, 248, 0.45);
+  --border-focus: #38bdf8;
 
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
-  --text-dim: #6b7280;
+  --text-main: #ffffff;
+  --text-bright: #ffffff;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
 
-  --primary-500: #6366f1;
-  --primary-600: #4f46e5;
-  --primary-glow: rgba(99, 102, 241, 0.35);
+  /* Primary Blues */
+  --primary-400: #38bdf8;
+  --primary-500: #0284c7;
+  --primary-600: #0369a1;
+  --primary-glow: rgba(56, 189, 248, 0.4);
 
-  --accent-cyan: #06b6d4;
-  --accent-purple: #a855f7;
+  /* Cyber Blue & White Accents */
+  --accent-cyan: #00f0ff;
+  --accent-blue: #2563eb;
+  --accent-ice: #e0f2fe;
+  --accent-white: #ffffff;
 
   --success: #10b981;
-  --success-glow: rgba(16, 185, 129, 0.25);
+  --success-glow: rgba(16, 185, 129, 0.3);
   --error: #ef4444;
-  --error-glow: rgba(239, 68, 68, 0.25);
+  --error-glow: rgba(239, 68, 68, 0.3);
   --warning: #f59e0b;
 
   --radius-sm: 8px;
@@ -32,10 +39,11 @@
   --radius-lg: 20px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.3);
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 30px -4px rgba(2, 6, 23, 0.7);
+  --shadow-lg: 0 16px 48px -8px rgba(2, 6, 23, 0.85);
+  --shadow-glow: 0 0 25px rgba(56, 189, 248, 0.35);
+  --shadow-blue-glow: 0 0 30px rgba(37, 99, 235, 0.35);
 }
 
 * {
@@ -56,14 +64,17 @@ body {
   line-height: 1.6;
 }
 
-/* Subtle background radial ambient lights */
+/* Futuristic Sci-Fi White & Blue background with subtle cyber grid */
 body {
   background-image: 
-    radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-    radial-gradient(at 90% 20%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
-    radial-gradient(at 50% 90%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
+    radial-gradient(at 15% 15%, rgba(56, 189, 248, 0.15) 0px, transparent 45%),
+    radial-gradient(at 85% 15%, rgba(37, 99, 235, 0.18) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(2, 132, 199, 0.12) 0px, transparent 55%),
+    linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
   background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat;
 }
 
 a {
