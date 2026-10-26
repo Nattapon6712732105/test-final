@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ระบบแบบฝึกหัดบทที่ 2: เครือข่ายคอมพิวเตอร์ (OSI & TCP/IP)
 
-## Getting Started
+เว็บแอปพลิเคชันทำแบบฝึกหัดออนไลน์ สร้างด้วย **Next.js (App Router)** พร้อมระบบตรวจข้อสอบอัตโนมัติตามเฉลย และบันทึกผลคะแนนลง **Google Sheets** โดยไม่ต้องพึ่งพาฐานข้อมูลภายนอก สามารถนำขึ้น **Vercel** ได้ทันที
 
-First, run the development server:
+---
+
+## 🚀 ฟีเจอร์หลัก
+1. **แปลง CSV เป็น JSON อัตโนมัติ**: ดึงข้อมูลจากไฟล์ `แบบฝึกหัดบทที่2_เฉลย.csv` มีทั้งหมด 20 ข้อ
+2. **ระบบกรอกข้อมูลผู้เข้าสอบ**: ระบุชื่อ-นามสกุล, รหัสนักศึกษา/เลขที่, และห้องเรียน
+3. **ระบบทำข้อสอบที่ทันสมัย**:
+   - แถบแสดงความคืบหน้า (Progress bar) และนาฬิกาจับเวลาแบบเรียลไทม์
+   - ปุ่มลัด (Navigation Pills) เพื่อข้ามไปยังข้อที่ต้องการ
+   - ระบบแจ้งเตือนหากยังมีข้อที่ยังไม่ได้ตอบก่อนกดยืนยันส่ง
+4. **ตรวจข้อสอบอัตโนมัติ**:
+   - แสดงคะแนนรวมและร้อยละ (%)
+   - ระบบดูเฉลยละเอียด พร้อมแท็บกรอง "ทั้งหมด", "ตอบถูก", "ตอบผิด"
+   - ปุ่มพิมพ์รายงาน / บันทึกเป็น PDF
+5. **บันทึกคะแนนเข้า Google Sheets**:
+   - บันทึกวัน-เวลา, ชื่อ, รหัส, คะแนน, ร้อยละ, เวลาที่ใช้ และรายละเอียดคำตอบ
+   - ทำงานผ่าน Google Apps Script Web App (ฟรี 100% ไม่ต้องเปิด GCP)
+6. **พร้อม Deploy ขึ้น Vercel ทันที**
+
+---
+
+## 📊 วิธีตั้งค่า Google Sheets (ทำครั้งเดียว)
+
+### ขั้นตอนที่ 1: เตรียม Google Sheet
+1. เปิด [Google Sheets](https://sheets.new) ขึ้นมา 1 แผ่น (ตั้งชื่อตามต้องการ เช่น *ผลสอบบทที่ 2*)
+2. ที่เมนูด้านบน ไปที่ **ส่วนขยาย (Extensions)** > **Apps Script**
+
+### ขั้นตอนที่ 2: วางโค้ด Apps Script
+1. ลบโค้ดเดิมในหน้าต่างออกทั้งหมด
+2. คัดลอกโค้ดจากไฟล์ [`google-apps-script.js`](./google-apps-script.js) ไปวาง
+3. กดปุ่มบันทึก 💾
+
+### ขั้นตอนที่ 3: ทำให้ใช้งานได้ (Deploy)
+1. กดปุ่มสีน้ำเงินมุมขวาบน **ทำให้ใช้งานได้ (Deploy)** > **การทำให้ใช้งานได้รายการใหม่ (New deployment)**
+2. คลิกรูปฟันเฟือง ⚙️ ด้านซ้าย เลือก **เว็บแอป (Web app)**
+3. ตั้งค่า:
+   - **คำอธิบาย:** รับผลสอบ
+   - **ดำเนินการในฐานะ (Execute as):** `ฉัน (Me)`
+   - **ผู้มีสิทธิ์เข้าถึง (Who has access):** `ทุกคน (Anyone)` *(สำคัญมาก ต้องเลือก Anyone)*
+4. กด **ทำให้ใช้งานได้ (Deploy)**
+5. กด **ให้สิทธิ์เข้าถึง (Authorize access)** และเลือกบัญชี Google ของคุณ
+6. คัดลอก **URL ของเว็บแอป (Web app URL)** (รูปแบบ `https://script.google.com/macros/s/.../exec`)
+
+### ขั้นตอนที่ 4: นำ URL มาใส่ในโปรเจกต์
+- ในเครื่องตัวเอง: วาง URL ในไฟล์ [`.env.local`](./.env.local):
+  ```env
+  GOOGLE_SHEET_WEB_APP_URL="https://script.google.com/macros/s/xxxx/exec"
+  ```
+- หรือบนหน้าเว็บ: กดปุ่ม **"ตั้งค่า Google Sheets"** มุมขวาบน แล้ววาง URL พร้อมกด **"⚡ ทดสอบ"** เพื่อทดสอบการบันทึกแถวข้อมูลได้ทันที
+
+---
+
+## 💻 วิธีรันและทดสอบในเครื่อง
 
 ```bash
+# 1. ติดตั้ง dependencies (หากยังไม่ได้ติดตั้ง)
+npm install
+
+# 2. แปลงไฟล์ CSV เป็น JSON
+npm run convert
+
+# 3. รัน Dev Server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+เปิดเบราว์เซอร์ไปที่ [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ☁️ วิธี Deploy ขึ้น Vercel
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push โค้ดทั้งหมดขึ้น **GitHub Repository**
+2. ไปที่ [Vercel](https://vercel.com) แล้วกด **Add New Project**
+3. เลือก Repository ที่เพิ่ง Push ขึ้นไป
+4. ในส่วน **Environment Variables**:
+   - **Key:** `GOOGLE_SHEET_WEB_APP_URL`
+   - **Value:** วาง URL เว็บแอป Google Apps Script ของคุณ
+5. กดปุ่ม **Deploy** ระบบจะ Build และพร้อมใช้งานผ่านโดเมน `.vercel.app` ทันที!

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "convert": "node scripts/convert-csv-to-json.js",
+    "build": "node scripts/convert-csv-to-json.js && next build",
     "start": "next start",
     "lint": "eslint"
   },
